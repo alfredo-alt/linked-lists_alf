@@ -61,6 +61,23 @@ class LinkedList {
 
     return this;
   }
+
+  /**
+   * @returns {number} the total number of nodes in the list.
+   */
+  size() {
+    let count = 0;
+    let current = this.headNode;
+
+    // Walk the whole chain, counting one node per step, until we fall
+    // off the end (nextNode === null).
+    while (current) {
+      count += 1;
+      current = current.nextNode;
+    }
+
+    return count;
+  }
 }
 
 export { Node, LinkedList };

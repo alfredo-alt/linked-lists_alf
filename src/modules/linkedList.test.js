@@ -43,3 +43,25 @@ describe('prepend functionality', () => {
     expect(list.headNode.nextNode.nextNode.nextNode).toBeNull();
   });
 });
+
+describe('size functionality', () => {
+  it('returns 0 for an empty list', () => {
+    const list = new LinkedList();
+    expect(list.size()).toBe(0);
+  });
+
+  it('returns the correct count after several appends', () => {
+    const list = new LinkedList();
+    list.append(1);
+    list.append(2);
+    list.append(3);
+    expect(list.size()).toBe(3);
+  });
+
+  it('counts nodes added with prepend as well', () => {
+    const list = new LinkedList();
+    list.append(1);
+    list.prepend(0);
+    expect(list.size()).toBe(2);
+  });
+});
