@@ -115,13 +115,93 @@ class LinkedList {
     }
 
     let current = this.headNode;
-    for (let i = 0; i < index; i++) {
+    for (let i = 0; i < index; i += 1) {
       if (!current.nextNode) {
         return undefined;
       }
       current = current.nextNode;
     }
     return current.value;
+  }
+
+  /**
+   * Removes the head node from the list and returns its value.
+   * @returns {*} the value of the removed head node, or `undefined`
+   * if the list was already empty.
+   */
+  pop() {
+    if (!this.headNode) {
+      return undefined;
+    }
+
+    const removedValue = this.headNode.value;
+    // The second node in the chain becomes the new head. If there was
+    // no second node, this.headNode.nextNode is already null, which
+    // correctly leaves the list empty.
+    this.headNode = this.headNode.nextNode;
+
+    return removedValue;
+  }
+
+  /**
+   * @param {*} value - the value to search for.
+   * @returns {boolean} true if `value` is found anywhere in the list,
+   * false otherwise.
+   */
+  contains(value) {
+    let current = this.headNode;
+
+    while (current) {
+      if (current.value === value) {
+        return true;
+      }
+      current = current.nextNode;
+    }
+
+    return false;
+  }
+
+  /**
+   * @param {*} value - the value to search for.
+   * @returns {number} the index of the first node containing `value`,
+   * or `-1` if no node matches.
+   */
+  findIndex(value) {
+    let current = this.headNode;
+    let index = 0;
+
+    while (current) {
+      if (current.value === value) {
+        return index;
+      }
+      current = current.nextNode;
+      index += 1;
+    }
+
+    return -1;
+  }
+
+  /**
+   * Represents the list as a string, e.g.
+   * "( 1 ) -> ( 2 ) -> ( 3 ) -> null".
+   * @returns {string} the string representation, or an empty string
+   * if the list has no nodes.
+   */
+  toString() {
+    if (!this.headNode) {
+      return '';
+    }
+
+    let result = '';
+    let current = this.headNode;
+
+    while (current) {
+      result += `( ${current.value} ) -> `;
+      current = current.nextNode;
+    }
+    result += 'null';
+
+    return result;
   }
 }
 

@@ -18,7 +18,7 @@ yarn-error.log*
 Thumbs.db
 
 # Carpetas de editores que no se deben compartir
-#.vscode/ es mi plantilla
+.vscode/ es mi plantilla
 .idea/
 *.suo
 *.ntvs*
