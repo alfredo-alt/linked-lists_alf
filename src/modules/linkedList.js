@@ -78,6 +78,51 @@ class LinkedList {
 
     return count;
   }
+
+  /**
+   * @returns {*} the value of the first node in the list, or
+   * `undefined` if the list is empty.
+   */
+  head() {
+    return this.headNode ? this.headNode.value : undefined;
+  }
+
+  /**
+   * @returns {*} the value of the last node in the list, or
+   * `undefined` if the list is empty.
+   */
+  tail() {
+    if (!this.headNode) {
+      return undefined;
+    }
+
+    let current = this.headNode;
+    while (current.nextNode) {
+      current = current.nextNode;
+    }
+    return current.value;
+  }
+
+  /**
+   * @param {number} index - zero-based position of the node to retrieve
+   *   (index 0 is the head node, index 1 is the next one, and so on).
+   * @returns {*} the value of the node at the specified index, or
+   * `undefined` if the index is out of bounds.
+   */
+  at(index) {
+    if (!this.headNode) {
+      return undefined;
+    }
+
+    let current = this.headNode;
+    for (let i = 0; i < index; i++) {
+      if (!current.nextNode) {
+        return undefined;
+      }
+      current = current.nextNode;
+    }
+    return current.value;
+  }
 }
 
 export { Node, LinkedList };

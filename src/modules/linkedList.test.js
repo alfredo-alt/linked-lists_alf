@@ -65,3 +65,69 @@ describe('size functionality', () => {
     expect(list.size()).toBe(2);
   });
 });
+
+describe('head functionality', () => {
+  it('returns undefined for an empty list', () => {
+    const list = new LinkedList();
+    expect(list.head()).toBeUndefined();
+  });
+
+  it('returns the value of the first node after appends', () => {
+    const list = new LinkedList();
+    list.append(1);
+    list.append(2);
+    expect(list.head()).toBe(1);
+  });
+
+  it('reflects the new first node after a prepend', () => {
+    const list = new LinkedList();
+    list.append(1);
+    list.prepend(0);
+    expect(list.head()).toBe(0);
+  });
+});
+
+describe('tail functionality', () => {
+  it('returns undefined for an empty list', () => {
+    const list = new LinkedList();
+    expect(list.tail()).toBeUndefined();
+  });
+
+  it('returns the value of the last node after appends', () => {
+    const list = new LinkedList();
+    list.append(1);
+    list.append(2);
+    expect(list.tail()).toBe(2);
+  });
+
+  it('reflects the new last node after a prepend', () => {
+    const list = new LinkedList();
+    list.append(1);
+    list.prepend(0);
+    expect(list.tail()).toBe(1);
+  });
+});
+
+describe('at functionality', () => {
+  it('returns undefined for an empty list', () => {
+    const list = new LinkedList();
+    expect(list.at(0)).toBeUndefined();
+  });
+
+  it('returns the value of the node at the specified index', () => {
+    const list = new LinkedList();
+    list.append(1);
+    list.append(2);
+    list.append(3);
+    expect(list.at(0)).toBe(1);
+    expect(list.at(1)).toBe(2);
+    expect(list.at(2)).toBe(3);
+  });
+
+  it('returns undefined for an index out of bounds', () => {
+    const list = new LinkedList();
+    list.append(1);
+    list.append(2);
+    expect(list.at(5)).toBeUndefined();
+  });
+});
