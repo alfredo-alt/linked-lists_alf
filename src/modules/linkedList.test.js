@@ -304,3 +304,68 @@ describe('insertAt functionality', () => {
     expect(() => list.insertAt(5, 99)).toThrow(RangeError);
   });
 });
+
+describe('removeAt functionality', () => {
+  it('removes the head node when index is 0', () => {
+    const list = new LinkedList();
+    list.append(1);
+    list.append(2);
+    list.append(3);
+
+    list.removeAt(0);
+
+    expect(list.toString()).toBe('( 2 ) -> ( 3 ) -> null');
+  });
+
+  it('removes a node in the middle of the list', () => {
+    const list = new LinkedList();
+    list.append(1);
+    list.append(2);
+    list.append(3);
+
+    list.removeAt(1);
+
+    expect(list.toString()).toBe('( 1 ) -> ( 3 ) -> null');
+  });
+
+  it('removes the last node in the list', () => {
+    const list = new LinkedList();
+    list.append(1);
+    list.append(2);
+    list.append(3);
+
+    list.removeAt(2);
+
+    expect(list.toString()).toBe('( 1 ) -> ( 2 ) -> null');
+  });
+
+  it('leaves the list empty after removing its only node', () => {
+    const list = new LinkedList();
+    list.append(1);
+
+    list.removeAt(0);
+
+    expect(list.size()).toBe(0);
+    expect(list.head()).toBeUndefined();
+  });
+
+  it('throws a RangeError when called on an empty list', () => {
+    const list = new LinkedList();
+    expect(() => list.removeAt(0)).toThrow(RangeError);
+  });
+
+  it('throws a RangeError when the index is negative', () => {
+    const list = new LinkedList();
+    list.append(1);
+
+    expect(() => list.removeAt(-1)).toThrow(RangeError);
+  });
+
+  it('throws a RangeError when the index is at or above the list size', () => {
+    const list = new LinkedList();
+    list.append(1);
+    list.append(2);
+
+    expect(() => list.removeAt(2)).toThrow(RangeError);
+  });
+});

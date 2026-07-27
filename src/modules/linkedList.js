@@ -245,6 +245,28 @@ class LinkedList {
       current = newNode;
     });
   }
-}
 
+  /**
+   * Removes the node at the specified index from the list.
+   * @param {number} index - zero-based position of the node to remove.
+   * @throws {RangeError} if `index` is below 0 or above the list's size.
+   */
+  removeAt(index) {
+    if (index === 0) {
+      if (!this.headNode) {
+        throw new RangeError(`Index ${index} is out of bounds for removeAt.`);
+      }
+      this.headNode = this.headNode.nextNode;
+      return;
+    }
+
+    const nodeBefore = this.getNodeAt(index - 1);
+
+    if (!nodeBefore || !nodeBefore.nextNode) {
+      throw new RangeError(`Index ${index} is out of bounds for removeAt.`);
+    }
+
+    nodeBefore.nextNode = nodeBefore.nextNode.nextNode;
+  }
+}
 export { Node, LinkedList };
