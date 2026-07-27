@@ -110,15 +110,8 @@ class LinkedList {
    * `undefined` if the index is out of bounds.
    */
   at(index) {
-    if (!this.headNode) {
-      return undefined;
-    }
-
-    let current = this.getNodeAt(index);
-    if (!current) {
-      return undefined;
-    }
-    return current.value;
+    const current = this.getNodeAt(index);
+    return current ? current.value : undefined;
   }
 
   /**
@@ -202,9 +195,14 @@ class LinkedList {
   }
 
   /**
+   * Internal helper: walks the chain to find the actual Node object at
+   * a given index (as opposed to `at()`, which returns just its value).
+   * Used by methods like `insertAt` that need to attach new nodes
+   * relative to an existing one.
    * @param {number} index - zero-based position of the node to retrieve
    *   (index 0 is the head node, index 1 is the next one, and so on).
-   * @returns {Node|null} the node at the specified index, or `null` if the index is out of bounds.
+   * @returns {Node|null} the node at the specified index, or `null` if
+   * the index is out of bounds.
    */
   getNodeAt(index) {
     if (!this.headNode || index < 0) {
@@ -222,29 +220,30 @@ class LinkedList {
   }
 
   /**
-   * Inserts one or more values at the specified index in the list.
-   * @param {number} index - zero-based position where the new values should be inserted.
+   * Inserts one or more values at the specified index in the list, in
+   * the same order they're given.
+   * @param {number} index - zero-based position where the new values
+   *   should be inserted.
    * @param {...*} values - one or more values to insert into the list.
+   * @throws {RangeError} if `index` is below 0 or above the list's size.
    */
   insertAt(index, ...values) {
-    if (index == 0) {
-      for (const value of values) {
-        this.prepend(value);
-      }
+    if (index === 0) {
+      [...values].reverse().forEach((value) => this.prepend(value));
       return;
     }
 
     let current = this.getNodeAt(index - 1);
 
     if (!current) {
-      throw rangeError(`Index ${index} is out of bounds for insertAt.`);
+      throw new RangeError(`Index ${index} is out of bounds for insertAt.`);
     }
 
-    for (const value of values) {
+    values.forEach((value) => {
       const newNode = new Node(value, current.nextNode);
       current.nextNode = newNode;
       current = newNode;
-    }
+    });
   }
 }
 
