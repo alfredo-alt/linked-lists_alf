@@ -114,12 +114,9 @@ class LinkedList {
       return undefined;
     }
 
-    let current = this.headNode;
-    for (let i = 0; i < index; i += 1) {
-      if (!current.nextNode) {
-        return undefined;
-      }
-      current = current.nextNode;
+    let current = this.getNodeAt(index);
+    if (!current) {
+      return undefined;
     }
     return current.value;
   }
@@ -202,6 +199,52 @@ class LinkedList {
     result += 'null';
 
     return result;
+  }
+
+  /**
+   * @param {number} index - zero-based position of the node to retrieve
+   *   (index 0 is the head node, index 1 is the next one, and so on).
+   * @returns {Node|null} the node at the specified index, or `null` if the index is out of bounds.
+   */
+  getNodeAt(index) {
+    if (!this.headNode || index < 0) {
+      return null;
+    }
+
+    let current = this.headNode;
+    for (let i = 0; i < index; i += 1) {
+      if (!current.nextNode) {
+        return null;
+      }
+      current = current.nextNode;
+    }
+    return current;
+  }
+
+  /**
+   * Inserts one or more values at the specified index in the list.
+   * @param {number} index - zero-based position where the new values should be inserted.
+   * @param {...*} values - one or more values to insert into the list.
+   */
+  insertAt(index, ...values) {
+    if (index == 0) {
+      for (const value of values) {
+        this.prepend(value);
+      }
+      return;
+    }
+
+    let current = this.getNodeAt(index - 1);
+
+    if (!current) {
+      throw rangeError(`Index ${index} is out of bounds for insertAt.`);
+    }
+
+    for (const value of values) {
+      const newNode = new Node(value, current.nextNode);
+      current.nextNode = newNode;
+      current = newNode;
+    }
   }
 }
 
