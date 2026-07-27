@@ -229,3 +229,78 @@ describe('toString functionality', () => {
     expect(list.toString()).toBe('( 1 ) -> ( 2 ) -> ( 3 ) -> null');
   });
 });
+
+describe('getNodeAt functionality', () => {
+  it('returns null for an empty list', () => {
+    const list = new LinkedList();
+    expect(list.getNodeAt(0)).toBeNull();
+  });
+
+  it('returns the actual Node object at a valid index', () => {
+    const list = new LinkedList();
+    list.append(1);
+    list.append(2);
+    const node = list.getNodeAt(1);
+    expect(node.value).toBe(2);
+  });
+
+  it('returns null for a negative index', () => {
+    const list = new LinkedList();
+    list.append(1);
+    expect(list.getNodeAt(-1)).toBeNull();
+  });
+
+  it('returns null for an out-of-bounds index', () => {
+    const list = new LinkedList();
+    list.append(1);
+    expect(list.getNodeAt(5)).toBeNull();
+  });
+});
+
+describe('insertAt functionality', () => {
+  it('inserts a single value in the middle, matching the assignment example', () => {
+    const list = new LinkedList();
+    list.append(1);
+    list.append(2);
+    list.append(3);
+
+    list.insertAt(1, 10, 11);
+
+    expect(list.toString()).toBe(
+      '( 1 ) -> ( 10 ) -> ( 11 ) -> ( 2 ) -> ( 3 ) -> null',
+    );
+  });
+
+  it('inserts multiple values at index 0, preserving the given order', () => {
+    const list = new LinkedList();
+    list.append(1);
+
+    list.insertAt(0, 10, 11);
+
+    expect(list.toString()).toBe('( 10 ) -> ( 11 ) -> ( 1 ) -> null');
+  });
+
+  it('inserts at the end of the list when index equals the current size', () => {
+    const list = new LinkedList();
+    list.append(1);
+    list.append(2);
+
+    list.insertAt(2, 3);
+
+    expect(list.toString()).toBe('( 1 ) -> ( 2 ) -> ( 3 ) -> null');
+  });
+
+  it('throws a RangeError when the index is negative', () => {
+    const list = new LinkedList();
+    list.append(1);
+
+    expect(() => list.insertAt(-1, 99)).toThrow(RangeError);
+  });
+
+  it('throws a RangeError when the index is above the list size', () => {
+    const list = new LinkedList();
+    list.append(1);
+
+    expect(() => list.insertAt(5, 99)).toThrow(RangeError);
+  });
+});
